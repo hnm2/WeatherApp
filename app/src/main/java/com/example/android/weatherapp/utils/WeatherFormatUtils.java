@@ -12,9 +12,6 @@ import com.example.android.weatherapp.data.AppPreferences;
 
 public final class WeatherFormatUtils
 {
-
-    private static final String LOG_TAG = WeatherFormatUtils.class.getSimpleName();
-
     private static double celsiusToFahrenheit(double temperatureInCelsius)
     {
         double temperatureInFahrenheit = (temperatureInCelsius * 1.8) + 32;
@@ -40,40 +37,8 @@ public final class WeatherFormatUtils
         String formattedHigh = formatTemperature(context, roundedHigh);
         String formattedLow = formatTemperature(context, roundedLow);
 
-        String highLowStr = formattedHigh + " / " + formattedLow;
+        String highLowStr = "Min: " + formattedLow + " Max: " + formattedHigh;
         return highLowStr;
-    }
-
-    public static String getFormattedWind(Context context, float windSpeed, float degrees)
-    {
-        int windFormat = R.string.format_wind_kmh;
-
-        if (!AppPreferences.isMetric(context))
-        {
-            windFormat = R.string.format_wind_mph;
-            windSpeed = .621371192237334f * windSpeed;
-        }
-
-        String direction = "Unknown";
-        if (degrees >= 337.5 || degrees < 22.5) {
-            direction = "N";
-        } else if (degrees >= 22.5 && degrees < 67.5) {
-            direction = "NE";
-        } else if (degrees >= 67.5 && degrees < 112.5) {
-            direction = "E";
-        } else if (degrees >= 112.5 && degrees < 157.5) {
-            direction = "SE";
-        } else if (degrees >= 157.5 && degrees < 202.5) {
-            direction = "S";
-        } else if (degrees >= 202.5 && degrees < 247.5) {
-            direction = "SW";
-        } else if (degrees >= 247.5 && degrees < 292.5) {
-            direction = "W";
-        } else if (degrees >= 292.5 && degrees < 337.5) {
-            direction = "NW";
-        }
-
-        return String.format(context.getString(windFormat), windSpeed, direction);
     }
 
     public static String getStringForWeatherCondition(Context context, int weatherId)

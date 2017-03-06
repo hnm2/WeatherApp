@@ -1,6 +1,7 @@
 package com.example.android.weatherapp.utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,30 +15,11 @@ import java.net.HttpURLConnection;
 
 public class JsonUtils
 {
-    /* Location information */
-    private static final String OWM_CITY = "city";
-    private static final String OWM_CITY_NAME = "name";
-    private static final String OWM_COORD = "coord";
-
-    /* Location coordinate */
-    private static final String OWM_LATITUDE = "lat";
-    private static final String OWM_LONGITUDE = "lon";
-
-    /* Weather information. Each day's forecast info is an element of the "list" array */
     private static final String OWM_LIST = "list";
-
-    private static final String OWM_PRESSURE = "pressure";
-    private static final String OWM_HUMIDITY = "humidity";
-    private static final String OWM_WINDSPEED = "speed";
-    private static final String OWM_WIND_DIRECTION = "deg";
-
-    /* All temperatures are children of the "temp" object */
+    private static final String OWM_MAIN = "main";
     private static final String OWM_TEMPERATURE = "temp";
-
-    /* Max temperature for the day */
-    private static final String OWM_MAX = "max";
-    private static final String OWM_MIN = "min";
-
+    private static final String OWM_MAX = "temp_max";
+    private static final String OWM_MIN = "temp_min";
     private static final String OWM_WEATHER = "weather";
     private static final String OWM_WEATHER_ID = "id";
     private static final String OWM_MESSAGE_CODE = "cod";
@@ -70,7 +52,7 @@ public class JsonUtils
         for (int i = 0; i < weatherArray.length(); i++)
         {
             String date;
-            String highAndLow;
+            String highLow;
             long dateTimeMillis;
             double high;
             double low;
@@ -81,18 +63,18 @@ public class JsonUtils
             dateTimeMillis = startDay + WeatherAppDateUtils.DAY_IN_MILLIS * i;
             date = WeatherAppDateUtils.getFriendlyDateString(context, dateTimeMillis, false);
 
+            JSONObject mainObject = dayForecast.getJSONObject(OWM_MAIN);
+            high = mainObject.getDouble(OWM_MAX);
+            low = mainObject.getDouble(OWM_MIN);
+            highLow = WeatherFormatUtils.formatHighLows(context, high, low);
+
             JSONObject weatherObject =
                     dayForecast.getJSONArray(OWM_WEATHER).getJSONObject(0);
 
             weatherId = weatherObject.getInt(OWM_WEATHER_ID);
             description = WeatherFormatUtils.getStringForWeatherCondition(context, weatherId);
 
-            JSONObject temperatureObject = dayForecast.getJSONObject(OWM_TEMPERATURE);
-            high = temperatureObject.getDouble(OWM_MAX);
-            low = temperatureObject.getDouble(OWM_MIN);
-            highAndLow = WeatherFormatUtils.formatHighLows(context, high, low);
-
-            parsedWeatherData[i] = date + " - " + description + " - " + highAndLow;
+            parsedWeatherData[i] = date + " - " + description + "\n" + highLow;
         }
 
         return parsedWeatherData;

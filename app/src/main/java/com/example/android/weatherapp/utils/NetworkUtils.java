@@ -35,11 +35,16 @@ public final class NetworkUtils
             "https://andfun-weather.udacity.com/weather";
     private static final String STATIC_WEATHER_URL =
             "https://andfun-weather.udacity.com/staticweather";
-    private static final String FORECAST_BASE_URL = STATIC_WEATHER_URL;
+    private static final String OPEN_WEATHER_URL =
+            "http://api.openweathermap.org/data/2.5/forecast";
+    private static final String FORECAST_BASE_URL = OPEN_WEATHER_URL;
+
+    private static final String APP_KEY = "e03bfb53e2883f09c0f5c17d79fe924e";
+    private static final String APP_ID = "APPID";
 
     private static final String format = "json";
     private static final String units = "metric";
-    private static final int numDays = 7;
+    private static final int numDays = 14;
 
     private static final String QUERY_PARAM = "q";
     private static final String LAT_PARAM = "lat";
@@ -91,10 +96,11 @@ public final class NetworkUtils
     private static URL buildUrlWithLocationQuery(String locationQuery)
     {
         Uri weatherQueryUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
-                .appendQueryParameter(QUERY_PARAM, locationQuery)
+                .appendQueryParameter(QUERY_PARAM, locationQuery + ",br")
                 .appendQueryParameter(FORMAT_PARAM, format)
                 .appendQueryParameter(UNITS_PARAM, units)
                 .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
+                .appendQueryParameter(APP_ID, APP_KEY)
                 .build();
 
         try

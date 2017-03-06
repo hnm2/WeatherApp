@@ -34,24 +34,6 @@ public final class WeatherAppDateUtils
         return TimeUnit.MILLISECONDS.toDays(utcDate);
     }
 
-    public static long normalizeDate(long date)
-    {
-        long daysSinceEpoch = elapsedDaysSinceEpoch(date);
-        long millisFromEpochToTodayAtMidnightUtc = daysSinceEpoch * DAY_IN_MILLIS;
-        return millisFromEpochToTodayAtMidnightUtc;
-    }
-
-    public static boolean isDateNormalized(long millisSinceEpoch)
-    {
-        boolean isDateNormalized = false;
-        if (millisSinceEpoch % DAY_IN_MILLIS == 0)
-        {
-            isDateNormalized = true;
-        }
-
-        return isDateNormalized;
-    }
-
     private static long getLocalMidnightFromNormalizedUtcDate(long normalizedUtcDate)
     {
         TimeZone timeZone = TimeZone.getDefault();
