@@ -16,10 +16,10 @@ public final class WeatherAppDateUtils
 {
     public static final long DAY_IN_MILLIS = TimeUnit.DAYS.toMillis(1);
 
-    public static long getNormalizedGMTDateForToday()
+    public static long getNormalizedUtcDateForToday()
     {
         long utcNowMillis = System.currentTimeMillis();
-        TimeZone currentTimeZone = TimeZone.getTimeZone("GMT");
+        TimeZone currentTimeZone = TimeZone.getDefault();
         long gmtOffsetMillis = currentTimeZone.getOffset(utcNowMillis);
         long timeSinceEpochLocalTimeMillis = utcNowMillis + gmtOffsetMillis;
 

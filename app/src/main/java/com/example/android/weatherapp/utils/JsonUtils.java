@@ -47,7 +47,7 @@ public class JsonUtils
 
         JSONArray weatherArray = forecastJson.getJSONArray(OWM_LIST);
         parsedWeatherData = new String[weatherArray.length()];
-        long startDay = WeatherAppDateUtils.getNormalizedGMTDateForToday();
+        long startDay = WeatherAppDateUtils.getNormalizedUtcDateForToday();
 
         for (int i = 0; i < weatherArray.length(); i++)
         {
