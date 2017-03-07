@@ -16,7 +16,7 @@ public final class WeatherAppDateUtils
 {
     public static final long DAY_IN_MILLIS = TimeUnit.DAYS.toMillis(1);
 
-    public static long getNormalizedUtcDateForToday()
+    public static long getNormalizedGMTDateForToday()
     {
         long utcNowMillis = System.currentTimeMillis();
         TimeZone currentTimeZone = TimeZone.getTimeZone("GMT");
