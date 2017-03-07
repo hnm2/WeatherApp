@@ -19,7 +19,7 @@ public final class WeatherAppDateUtils
     public static long getNormalizedUtcDateForToday()
     {
         long utcNowMillis = System.currentTimeMillis();
-        TimeZone currentTimeZone = TimeZone.getDefault();
+        TimeZone currentTimeZone = TimeZone.getTimeZone("GMT");
         long gmtOffsetMillis = currentTimeZone.getOffset(utcNowMillis);
         long timeSinceEpochLocalTimeMillis = utcNowMillis + gmtOffsetMillis;
 
